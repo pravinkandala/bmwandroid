@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">bmwandroid</string>
+    <string name="json_url">http://localsearch.azurewebsites.net/api/Locations</string>
 </resources>
