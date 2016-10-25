@@ -11,29 +11,26 @@ import com.pk.bmwandroid.model.factory.LocationComparatorFactory.SortingCriteria
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Pravin on 10/25/16.
- * Project: bmwandroid
- */
-
 public class LocationRepository {
 
-    private DataSource dataSource;
-    public LocationRepository() { dataSource = new InMemoryDataSource(); }
+    private DataSource mDataSource;
+    public LocationRepository() { mDataSource = new InMemoryDataSource(); }
 
     public void add(Location location) {
-        dataSource.getLocations().add(location);
+        mDataSource.getLocations().add(location);
     }
     public void addAll(List<Location> locations) {
-        dataSource.getLocations().clear();
-        dataSource.getLocations().addAll(locations);
+        mDataSource.getLocations().clear();
+        mDataSource.getLocations().addAll(locations);
     }
     public List<Location> getAll() {
-        return dataSource.getLocations();
+        return mDataSource.getLocations();
     }
+
     public List<Location> getAll(SortingCriteria criteria, Context context) {
-        Collections.sort(dataSource.getLocations(), LocationComparatorFactory.getCompartorFactory(criteria, context));
-        return dataSource.getLocations();
+        Collections.sort(mDataSource.getLocations(),
+                LocationComparatorFactory.getComparatorFactory(criteria, context));
+        return mDataSource.getLocations();
     }
 
 }

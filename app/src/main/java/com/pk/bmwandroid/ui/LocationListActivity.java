@@ -25,57 +25,61 @@ import com.pk.bmwandroid.network.ServerCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 
 public class LocationListActivity extends AppCompatActivity {
 
+    @BindView(R.id.my_recycler_view)
     MaterialListView mMaterialListView;
-    Context context;
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.activity_main)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private LocationRepository locationRepository;
-    private SortingCriteria sortingCriteria;
+    Context mContext;
+
+    private LocationRepository mLocationRepository;
+    private SortingCriteria mSortingCriteria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        mMaterialListView = ((MaterialListView) findViewById(R.id.my_recycler_view));
         mMaterialListView.setItemAnimator(new SlideInDownAnimator());
         mMaterialListView.getItemAnimator().setAddDuration(300);
         mMaterialListView.getItemAnimator().setRemoveDuration(300);
 
-        context = this;
+        ButterKnife.bind(this);
+        mContext = this;
+
 
         //Initializing Repository
-        this.locationRepository = new LocationRepository();
-        this.sortingCriteria = SortingCriteria.NAME;
+        this.mLocationRepository = new LocationRepository();
+        this.mSortingCriteria = SortingCriteria.NAME;
 
 
         // Get Initial Data - on Notified - fillCards
         initList();
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
+                mSwipeRefreshLayout.setRefreshing(true);
                 initList();
             }
         });
 
 
-
     }
 
     public void initList() {
-        LocalSearchManager.getLocalSearchResults(context, getString(R.string.json_url), new ServerCallback() {
+        LocalSearchManager.getLocalSearchResults(mContext, getString(R.string.json_url), new ServerCallback() {
             @Override
             public void onSuccess(final List<Location> locations) {
-                locationRepository.addAll(locations);
-                fillCards(locationRepository.getAll(sortingCriteria, context));
+                mLocationRepository.addAll(locations);
+                fillCards(mLocationRepository.getAll(mSortingCriteria, mContext));
             }
         });
     }
@@ -84,7 +88,7 @@ public class LocationListActivity extends AppCompatActivity {
         List<Card> cards = new ArrayList<>();
         mMaterialListView.getAdapter().clearAll();
         for (int i = 0; i < locations.size(); i++) {
-            cards.add(new Card.Builder(context)
+            cards.add(new Card.Builder(mContext)
                     .withProvider(new CardProvider())
                     .setTitle(locations.get(i).getName())
                     .setTitleColor(Color.BLACK)
@@ -98,18 +102,9 @@ public class LocationListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(Card card, int position) {
-
-                Intent intent = new Intent(context, LocationDescriptionActivity.class);
+                Intent intent = new Intent(mContext, LocationDescriptionActivity.class);
                 intent.putExtra("location", locations.get(position));
-//                intent.putExtra("id", locations.get(position).getId());
-//                intent.putExtra("name", locations.get(position).getName());
-//                intent.putExtra("latitude", locations.get(position).getLatitude());
-//                intent.putExtra("longitude", locations.get(position).getLongitude());
-//                intent.putExtra("address", locations.get(position).getAddress());
-//                intent.putExtra("arrival_time", locations.get(position).getArrivalTime());
-
                 startActivity(intent);
-
             }
 
             @Override
@@ -119,7 +114,7 @@ public class LocationListActivity extends AppCompatActivity {
         });
 
         mMaterialListView.getAdapter().addAll(cards);
-        swipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -138,11 +133,11 @@ public class LocationListActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menu_sort_by_name:
-                fillCards(this.locationRepository.getAll(SortingCriteria.NAME, context));
+                fillCards(this.mLocationRepository.getAll(SortingCriteria.NAME, mContext));
                 return true;
 
             case R.id.menu_sort_by_time:
-                fillCards(this.locationRepository.getAll(SortingCriteria.DISTANCE_FROM_CURRENT_LOCATION, context));
+                fillCards(this.mLocationRepository.getAll(SortingCriteria.DISTANCE_FROM_CURRENT_LOCATION, mContext));
 
             default:
                 return super.onOptionsItemSelected(item);

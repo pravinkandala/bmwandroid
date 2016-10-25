@@ -17,28 +17,28 @@ import com.pk.bmwandroid.model.Location;
 
 import org.joda.time.DateTime;
 
-import static com.pk.bmwandroid.R.id.address;
-import static com.pk.bmwandroid.R.id.latitude;
-import static com.pk.bmwandroid.R.id.longitude;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.pk.bmwandroid.util.DateUtil.getDuration;
 
 public class LocationDescriptionActivity extends AppCompatActivity {
 
-    GoogleMap map;
-    TextView mNameTV, mAddressTV, mArrivalTimeTV, mLatitudeTV, mLongitudeTV;
+    @BindView(R.id.name) TextView mNameTV;
+    @BindView(R.id.address) TextView mAddressTV;
+    @BindView(R.id.arrival_time) TextView mArrivalTimeTV;
+    @BindView(R.id.latitude) TextView mLatitudeTV;
+    @BindView(R.id.longitude) TextView mLongitudeTV;
+
+    private GoogleMap mGoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_description);
+        ButterKnife.bind(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mNameTV = (TextView) findViewById(R.id.name);
-        mArrivalTimeTV = (TextView) findViewById(R.id.arrival_time);
-        mLatitudeTV = (TextView) findViewById(latitude);
-        mLongitudeTV = (TextView) findViewById(longitude);
-        mAddressTV = (TextView) findViewById(address);
 
         Intent intent = this.getIntent();
         final Location location = (Location) intent.getSerializableExtra("location");
@@ -52,11 +52,11 @@ public class LocationDescriptionActivity extends AppCompatActivity {
         String address = location.getAddress();
         String arrival_time = location.getArrivalTime();
 
-        mNameTV.setText("Name: "+name);
-
+        //find diff of duration from now
         DateTime arrival_time_in_string = new DateTime(arrival_time);
         String time = getDuration(arrival_time_in_string);
 
+        mNameTV.setText("Name: "+name);
         mArrivalTimeTV.setText("Arrival Time: "+time);
         mLatitudeTV.setText("Lat:"+latitude);
         mLongitudeTV.setText("Lng:"+longitude);
@@ -67,21 +67,21 @@ public class LocationDescriptionActivity extends AppCompatActivity {
 
 
             //map settings
-            map = ((MapFragment)getFragmentManager().findFragmentById(R.id.mapFragment)).getMap();
+            mGoogleMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.google_map_fragment)).getMap();
             MarkerOptions k = new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)))
                     .title(name);
-            map.addMarker(k);
-            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            map.getUiSettings().setZoomControlsEnabled(false);
-            map.getUiSettings().setAllGesturesEnabled(false);
-            map.getUiSettings().setCompassEnabled(true);
-            map.getUiSettings().setMyLocationButtonEnabled(true);
-            map.getUiSettings().setRotateGesturesEnabled(true);
-            map.getUiSettings().setTiltGesturesEnabled(true);
+            mGoogleMap.addMarker(k);
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+            mGoogleMap.getUiSettings().setAllGesturesEnabled(false);
+            mGoogleMap.getUiSettings().setCompassEnabled(true);
+            mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mGoogleMap.getUiSettings().setRotateGesturesEnabled(true);
+            mGoogleMap.getUiSettings().setTiltGesturesEnabled(true);
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude))).zoom(16).build();
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
         }catch (Exception e){

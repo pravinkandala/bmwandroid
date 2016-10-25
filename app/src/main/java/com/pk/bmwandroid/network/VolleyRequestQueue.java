@@ -1,53 +1,51 @@
 package com.pk.bmwandroid.network;
 
-import android.app.Application;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * Created by Pravin on 10/25/16.
+ * Project: bmwandroid
+ */
 
-@Deprecated
-public class VolleyRequestQueue extends Application {
-
-    public static final String TAG = VolleyRequestQueue.class.getSimpleName();
-
-    private RequestQueue mRequestQueue;
-
+public class VolleyRequestQueue {
+    public static final String DEFAULT_TAG = "VolleyRequestQueue";
     private static VolleyRequestQueue mInstance;
+    private RequestQueue mRequestQueue;
+    private Context mContext;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mInstance = this;
+    private VolleyRequestQueue(Context context) {
+        mContext = context;
+        mRequestQueue = getRequestQueue();
     }
 
-    public static synchronized VolleyRequestQueue getInstance() {
+    public static synchronized VolleyRequestQueue getInstance(Context context) {
+        if(mInstance == null)
+            mInstance = new VolleyRequestQueue(context);
         return mInstance;
     }
 
     public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-
+        if (mRequestQueue == null)
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         return mRequestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+        req.setTag(TextUtils.isEmpty(tag) ? DEFAULT_TAG : tag);
         getRequestQueue().add(req);
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(TAG);
+        req.setTag(DEFAULT_TAG);
         getRequestQueue().add(req);
     }
 
     public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
+        getRequestQueue().cancelAll(tag);
     }
 }

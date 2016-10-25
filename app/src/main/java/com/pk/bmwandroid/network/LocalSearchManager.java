@@ -58,6 +58,6 @@ public class LocalSearchManager {
 
 
         // Adding request to request queue
-        VolleyRequestKue.getInstance(context).addToRequestQueue(mJsonArrayRequest);
+        VolleyRequestQueue.getInstance(context).addToRequestQueue(mJsonArrayRequest);
     }
 }

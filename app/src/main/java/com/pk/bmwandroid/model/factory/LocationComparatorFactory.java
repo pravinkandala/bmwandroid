@@ -16,7 +16,7 @@ public class LocationComparatorFactory {
 
     public enum SortingCriteria { NAME, DISTANCE_FROM_CURRENT_LOCATION }
 
-    public static Comparator<Location> getCompartorFactory(SortingCriteria criteria, final Context context) {
+    public static Comparator<Location> getComparatorFactory(SortingCriteria criteria, final Context context) {
         switch (criteria) {
             case NAME: return new Comparator<Location>() {
                 @Override
@@ -46,19 +46,9 @@ public class LocationComparatorFactory {
                         gpsTracker.showSettingsAlert();
                     }
 
-
                     float distance1 = myLocation.distanceTo(loc1);
                     float distance2 = myLocation.distanceTo(loc2);
 
-
-
-
-                    //final double d1 = getDistanceBetween(lat, lng, l1.getLatitude(), l1.getLongitude());
-                    //final double d2 = getDistanceBetween(lat, lng, l2.getLatitude(), l2.getLongitude());
-
-
-
-                    // getTimeDifferenceFromNow(Date date) : (date - now)
                     return Float.compare(distance1,distance2);
 
                 }
