@@ -1,4 +1,4 @@
-package com.pk.bmwandroid.Model;
+package com.pk.bmwandroid;
 
 import android.app.Application;
 import android.text.TextUtils;

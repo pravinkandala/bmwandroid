@@ -8,16 +8,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.pk.bmwandroid.LocationDescription">
+    tools:context="com.pk.bmwandroid.LocationDescriptionActivity">
 
-
-
-
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="7dp" />
 
     <TextView
         android:id="@+id/arrival_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mapFragment"
+        android:layout_marginTop="8dp"
         android:text="Arrival Time: " />
 
     <TextView
@@ -36,9 +41,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/address">
+       android:layout_below="@id/address"
+        >
 
         <TextView
             android:id="@+id/latitude"

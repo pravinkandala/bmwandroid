@@ -29,4 +29,6 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.github.dexafree:materiallist:3.2.1'
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'net.danlew:android.joda:2.9.4.3'
 }
