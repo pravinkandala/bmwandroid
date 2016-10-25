@@ -1,8 +1,9 @@
-package com.pk.bmwandroid;
+package com.pk.bmwandroid.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,6 +12,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pk.bmwandroid.R;
+import com.pk.bmwandroid.model.Location;
 
 import org.joda.time.DateTime;
 
@@ -29,6 +32,8 @@ public class LocationDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_description);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mNameTV = (TextView) findViewById(R.id.name);
         mArrivalTimeTV = (TextView) findViewById(R.id.arrival_time);
         mLatitudeTV = (TextView) findViewById(latitude);
@@ -36,12 +41,16 @@ public class LocationDescriptionActivity extends AppCompatActivity {
         mAddressTV = (TextView) findViewById(address);
 
         Intent intent = this.getIntent();
-        String id = intent.getStringExtra("id");
-        String name = intent.getStringExtra("name");
-        String latitude = intent.getStringExtra("latitude");
-        String longitude = intent.getStringExtra("longitude");
-        String address = intent.getStringExtra("address");
-        String arrival_time = intent.getStringExtra("arrival_time");
+        final Location location = (Location) intent.getSerializableExtra("location");
+        getSupportActionBar().setTitle(location.getName());
+
+        // TODO:  get from location
+        String id = location.getId();
+        String name = location.getName();
+        String latitude = location.getLatitude();
+        String longitude = location.getLongitude();
+        String address = location.getAddress();
+        String arrival_time = location.getArrivalTime();
 
         mNameTV.setText("Name: "+name);
 
@@ -55,6 +64,7 @@ public class LocationDescriptionActivity extends AppCompatActivity {
 
 
         try{
+
 
             //map settings
             map = ((MapFragment)getFragmentManager().findFragmentById(R.id.mapFragment)).getMap();
@@ -78,6 +88,13 @@ public class LocationDescriptionActivity extends AppCompatActivity {
             e.printStackTrace();
         }//end of try - catch
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {
+        onBackPressed();
+        return true;
     }
 
 

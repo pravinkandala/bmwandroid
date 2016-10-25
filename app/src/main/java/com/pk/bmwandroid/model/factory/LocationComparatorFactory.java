@@ -1,5 +1,8 @@
 package com.pk.bmwandroid.model.factory;
 
+import android.content.Context;
+
+import com.pk.bmwandroid.listener.GPSTracker;
 import com.pk.bmwandroid.model.Location;
 
 import java.util.Comparator;
@@ -13,7 +16,7 @@ public class LocationComparatorFactory {
 
     public enum SortingCriteria { NAME, DISTANCE_FROM_CURRENT_LOCATION }
 
-    public static Comparator<Location> getCompartorFactory(SortingCriteria criteria) {
+    public static Comparator<Location> getCompartorFactory(SortingCriteria criteria, final Context context) {
         switch (criteria) {
             case NAME: return new Comparator<Location>() {
                 @Override
@@ -30,11 +33,22 @@ public class LocationComparatorFactory {
                     loc1.setLatitude(Double.parseDouble(l1.getLongitude()));
                     loc1.setLongitude(Double.parseDouble(l1.getLongitude()));
 
-                    android.location.Location loc2 = new android.location.Location("Location 1");
+                    android.location.Location loc2 = new android.location.Location("Location 2");
                     loc2.setLatitude(Double.parseDouble(l1.getLongitude()));
                     loc2.setLongitude(Double.parseDouble(l1.getLongitude()));
 
-                    float distance = loc1.distanceTo(loc2);
+                    android.location.Location myLocation = new android.location.Location("Location 2");
+                    GPSTracker gpsTracker = new GPSTracker(context);
+                    if(gpsTracker.getIsGPSTrackingEnabled()) {
+                        loc2.setLatitude(gpsTracker.getLatitude());
+                        loc2.setLongitude(gpsTracker.getLatitude());
+                    }else{
+                        gpsTracker.showSettingsAlert();
+                    }
+
+
+                    float distance1 = myLocation.distanceTo(loc1);
+                    float distance2 = myLocation.distanceTo(loc2);
 
 
 
@@ -45,8 +59,8 @@ public class LocationComparatorFactory {
 
 
                     // getTimeDifferenceFromNow(Date date) : (date - now)
-                    //return Double.compare(d1,d2);
-                    return 0;
+                    return Float.compare(distance1,distance2);
+
                 }
             };
 

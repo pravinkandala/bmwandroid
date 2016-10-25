@@ -19,9 +19,9 @@ public class DateUtil {
         final int minutes = Minutes.minutesBetween(new DateTime(start), new DateTime(end)).getMinutes() - (hours * 60);
         final int seconds = Seconds.secondsBetween(new DateTime(start), new DateTime(end)).getSeconds() - ((hours * 3600) + (minutes * 60));
 
-        if(minutes>0){
+        if(hours>0){
             return hours + "hrs " + minutes + "mins " + seconds + "secs";
-        }if(hours>0){
+        }else if(minutes>0){
             return minutes + "mins " + seconds + "secs" ;
         }else{
             return seconds + "sec";

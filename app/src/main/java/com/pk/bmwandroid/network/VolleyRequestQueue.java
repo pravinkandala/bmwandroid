@@ -1,4 +1,4 @@
-package com.pk.bmwandroid;
+package com.pk.bmwandroid.network;
 
 import android.app.Application;
 import android.text.TextUtils;
@@ -8,14 +8,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 
+@Deprecated
+public class VolleyRequestQueue extends Application {
 
-public class AppController extends Application {
-
-    public static final String TAG = AppController.class.getSimpleName();
+    public static final String TAG = VolleyRequestQueue.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
 
-    private static AppController mInstance;
+    private static VolleyRequestQueue mInstance;
 
     @Override
     public void onCreate() {
@@ -23,7 +23,7 @@ public class AppController extends Application {
         mInstance = this;
     }
 
-    public static synchronized AppController getInstance() {
+    public static synchronized VolleyRequestQueue getInstance() {
         return mInstance;
     }
 

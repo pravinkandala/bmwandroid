@@ -1,4 +1,4 @@
-package com.pk.bmwandroid;
+package com.pk.bmwandroid.network;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -9,8 +9,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.pk.bmwandroid.model.Location;
-import com.pk.bmwandroid.network.ServerCallback;
-import com.pk.bmwandroid.network.VolleyRequestKue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,14 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Pravin on 10/24/16.
+ * Created by Pravin on 10/25/16.
  * Project: bmwandroid
  */
 
-@Deprecated
-public class GetJson {
-
-    public static void getJSON(final Context context, String url, final ServerCallback callback) {
+public class LocalSearchManager {
+    public static void getLocalSearchResults(final Context context, String url, final ServerCallback callback) {
 
         JsonArrayRequest mJsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONArray>() {

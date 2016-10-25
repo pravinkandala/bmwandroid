@@ -1,4 +1,6 @@
-package com.pk.bmwandroid.model;
+package com.pk.bmwandroid.network;
+
+import com.pk.bmwandroid.model.Location;
 
 import java.util.List;
 

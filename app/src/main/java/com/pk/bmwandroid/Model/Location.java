@@ -3,12 +3,14 @@ package com.pk.bmwandroid.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Pravin on 10/24/16.
  * Project: bmwandroid
  */
 
-public class Location {
+public class Location implements Serializable {
     private String id;
     private String name;
     private String latitude;

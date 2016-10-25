@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">bmwandroid</string>
     <string name="json_url">http://localsearch.azurewebsites.net/api/Locations</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_alphabet">A-Z</string>
+    <string name="menu_arrivalTime">A-Z</string>
 </resources>
