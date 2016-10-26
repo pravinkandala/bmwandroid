@@ -31,7 +31,6 @@ public class LocationListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
 
     Context mContext;
-    int count = 0;
     private LocationRepository mLocationRepository;
     private SortingCriteria mSortingCriteria;
 
@@ -57,6 +56,7 @@ public class LocationListActivity extends AppCompatActivity {
         // Get Initial Data - on Notified - fillCards
         initList();
 
+        // Swipe to refresh
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -67,6 +67,9 @@ public class LocationListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Load json from url
+     */
     public void initList() {
         mSwipeRefreshLayout.setRefreshing(true);
         LocalSearchManager.getLocalSearchResults(mContext, getString(R.string.json_url), new ServerCallback() {
@@ -78,6 +81,9 @@ public class LocationListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Fill data into cards
+     */
     public void fillCards(final List<Location> locations) {
 
         mAdapter = new LocationAdapter(this, locations);

@@ -24,11 +24,16 @@ import static com.pk.bmwandroid.util.DateUtil.toDateTime;
 
 public class LocationDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.name) TextView mNameTV;
-    @BindView(R.id.address) TextView mAddressTV;
-    @BindView(R.id.arrival_time) TextView mArrivalTimeTV;
-    @BindView(R.id.latitude) TextView mLatitudeTV;
-    @BindView(R.id.longitude) TextView mLongitudeTV;
+    @BindView(R.id.name)
+    TextView mNameTV;
+    @BindView(R.id.address)
+    TextView mAddressTV;
+    @BindView(R.id.arrival_time)
+    TextView mArrivalTimeTV;
+    @BindView(R.id.latitude)
+    TextView mLatitudeTV;
+    @BindView(R.id.longitude)
+    TextView mLongitudeTV;
 
     private GoogleMap mGoogleMap;
 
@@ -40,8 +45,11 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get location details from position selected from pervious activity
         Intent intent = this.getIntent();
         final Location location = (Location) intent.getSerializableExtra("location");
+
+        //Set actionbar title
         getSupportActionBar().setTitle(location.getName());
 
 //        String id = location.getId();
@@ -54,10 +62,9 @@ public class LocationDetailActivity extends AppCompatActivity {
         //find diff of duration from now
         String time = getDuration(toDateTime(arrival_time));
 
-
-        try{
+        try {
             //map settings
-            mGoogleMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.google_map_fragment)).getMap();
+            mGoogleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.google_map_fragment)).getMap();
             MarkerOptions k = new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)))
                     .title(name);
@@ -74,9 +81,11 @@ public class LocationDetailActivity extends AppCompatActivity {
             mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Html formatting for bold and italics for TextView
 
         name = "<b>Name: </b> " + name;
         mNameTV.setText(Html.fromHtml(name));
@@ -96,14 +105,9 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem)
-    {
-        finish();
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        onBackPressed();
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 }

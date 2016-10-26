@@ -16,17 +16,28 @@ public class LocationRepository {
     private DataSource mDataSource;
     public LocationRepository() { mDataSource = new InMemoryDataSource(); }
 
+
     public void add(Location location) {
         mDataSource.getLocations().add(location);
     }
+
+    /**
+     * store list of locations
+     */
     public void addAll(List<Location> locations) {
         mDataSource.getLocations().clear();
         mDataSource.getLocations().addAll(locations);
     }
+    /**
+     * returns stored list
+     */
     public List<Location> getAll() {
         return mDataSource.getLocations();
     }
 
+    /**
+     * returns stored list using criteria
+     */
     public List<Location> getAll(SortingCriteria criteria, Context context) {
         Collections.sort(mDataSource.getLocations(),
                 LocationComparatorFactory.getComparatorFactory(criteria, context));

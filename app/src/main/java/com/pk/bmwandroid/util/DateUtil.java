@@ -8,6 +8,9 @@ import org.joda.time.Seconds;
 
 public class DateUtil {
 
+    /**
+     * returns difference between end time and  present device time in string format
+     */
     public static String getDuration(DateTime end) {
         DateTime start = DateTime.now(DateTimeZone.UTC);
         final int hours = Hours.hoursBetween(new DateTime(start), new DateTime(end)).getHours();
@@ -23,12 +26,18 @@ public class DateUtil {
         }
     }
 
+    /**
+     * returns difference between end time and  present device time in seconds format
+     */
     public static Seconds getDurationInJoda(DateTime end) {
         DateTime start = DateTime.now(DateTimeZone.UTC);
         Seconds time = Seconds.secondsBetween(start,end);
         return time;
     }
 
+    /**
+     * converts String to DateTime
+     */
     public static DateTime toDateTime(String arrivalTime) {
         return new DateTime(arrivalTime);
     }

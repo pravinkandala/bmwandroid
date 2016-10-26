@@ -27,7 +27,6 @@ public class LocalSearchManager {
                 List<Location> locations = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
-
                     try {
                         locations.add(
                                 Location.fromJsonObject(response.getJSONObject(i))

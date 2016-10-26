@@ -27,11 +27,8 @@ public class LocationComparatorFactory {
                 return new Comparator<Location>() {
                     @Override
                     public int compare(Location l1, Location l2) {
-
                         Seconds time1 = getDurationInJoda(toDateTime(l1.getArrivalTime()));
-
                         Seconds time2 = getDurationInJoda(toDateTime(l2.getArrivalTime()));
-
                         return time1.compareTo(time2);
 
                     }
