@@ -7,11 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Created by Pravin on 10/25/16.
- * Project: bmwandroid
- */
-
 public class VolleyRequestQueue {
     public static final String DEFAULT_TAG = "VolleyRequestQueue";
     private static VolleyRequestQueue mInstance;

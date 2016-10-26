@@ -44,8 +44,7 @@ public class LocationDescriptionActivity extends AppCompatActivity {
         final Location location = (Location) intent.getSerializableExtra("location");
         getSupportActionBar().setTitle(location.getName());
 
-        // TODO:  get from location
-        String id = location.getId();
+//        String id = location.getId();
         String name = location.getName();
         String latitude = location.getLatitude();
         String longitude = location.getLongitude();
@@ -64,8 +63,6 @@ public class LocationDescriptionActivity extends AppCompatActivity {
 
 
         try{
-
-
             //map settings
             mGoogleMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.google_map_fragment)).getMap();
             MarkerOptions k = new MarkerOptions()
@@ -86,16 +83,19 @@ public class LocationDescriptionActivity extends AppCompatActivity {
 
         }catch (Exception e){
             e.printStackTrace();
-        }//end of try - catch
+        }
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
+        finish();
         return true;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

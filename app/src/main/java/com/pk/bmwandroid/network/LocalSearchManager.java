@@ -16,11 +16,6 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Pravin on 10/25/16.
- * Project: bmwandroid
- */
-
 public class LocalSearchManager {
     public static void getLocalSearchResults(final Context context, String url, final ServerCallback callback) {
 

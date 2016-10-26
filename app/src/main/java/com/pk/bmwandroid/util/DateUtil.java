@@ -6,11 +6,6 @@ import org.joda.time.Hours;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 
-/**
- * Created by Pravin on 10/24/16.
- * Project: bmwandroid
- */
-
 public class DateUtil {
 
     public static String getDuration(DateTime end) {
@@ -26,6 +21,16 @@ public class DateUtil {
         }else{
             return seconds + "sec";
         }
+    }
+
+    public static String getDurationinJoda(DateTime end) {
+        DateTime start = DateTime.now(DateTimeZone.UTC);
+        String time = Seconds.secondsBetween(start,end).toString();
+        return time;
+    }
+
+    public static DateTime toDateTime(String arrivalTime) {
+        return new DateTime(arrivalTime);
     }
 
 

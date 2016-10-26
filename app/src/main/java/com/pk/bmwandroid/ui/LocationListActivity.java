@@ -1,20 +1,17 @@
 package com.pk.bmwandroid.ui;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.dexafree.materialList.card.Card;
-import com.dexafree.materialList.card.CardProvider;
-import com.dexafree.materialList.listeners.RecyclerItemClickListener;
-import com.dexafree.materialList.view.MaterialListView;
+import com.pk.bmwandroid.LocationAdapter;
 import com.pk.bmwandroid.R;
 import com.pk.bmwandroid.data.repository.LocationRepository;
 import com.pk.bmwandroid.model.Location;
@@ -22,37 +19,35 @@ import com.pk.bmwandroid.model.factory.LocationComparatorFactory.SortingCriteria
 import com.pk.bmwandroid.network.LocalSearchManager;
 import com.pk.bmwandroid.network.ServerCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
 
 public class LocationListActivity extends AppCompatActivity {
 
-    @BindView(R.id.my_recycler_view)
-    MaterialListView mMaterialListView;
-    @BindView(R.id.activity_main)
+    RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView.Adapter mAdapter;
 
     Context mContext;
-
+    int count = 0;
     private LocationRepository mLocationRepository;
     private SortingCriteria mSortingCriteria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-        mMaterialListView.setItemAnimator(new SlideInDownAnimator());
-        mMaterialListView.getItemAnimator().setAddDuration(300);
-        mMaterialListView.getItemAnimator().setRemoveDuration(300);
-
         ButterKnife.bind(this);
         mContext = this;
+
+        setContentView(R.layout.activity_main);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemAnimator(new SlideInRightAnimator());
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main);
 
 
         //Initializing Repository
@@ -85,35 +80,30 @@ public class LocationListActivity extends AppCompatActivity {
     }
 
     public void fillCards(final List<Location> locations) {
-        List<Card> cards = new ArrayList<>();
-        mMaterialListView.getAdapter().clearAll();
-        for (int i = 0; i < locations.size(); i++) {
-            cards.add(new Card.Builder(mContext)
-                    .withProvider(new CardProvider())
-                    .setTitle(locations.get(i).getName())
-                    .setTitleColor(Color.BLACK)
-                    .setSubtitle(locations.get(i).getAddress())
-                    .setSubtitleColor(Color.BLACK)
-                    .setLayout(R.layout.item_location)
-                    .endConfig()
-                    .build());
-        }
-        mMaterialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+//        List<Card> cards = new ArrayList<>();
 
-            @Override
-            public void onItemClick(Card card, int position) {
-                Intent intent = new Intent(mContext, LocationDescriptionActivity.class);
-                intent.putExtra("location", locations.get(position));
-                startActivity(intent);
-            }
+        mAdapter = new LocationAdapter(this, locations);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            @Override
-            public void onItemLongClick(Card card, int position) {
-                Log.d("LONG_CLICK", card.getTag().toString());
-            }
-        });
 
-        mMaterialListView.getAdapter().addAll(cards);
+//        mMaterialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(Card card, int position) {
+//                Log.d("cards","button clicked: "+ count);
+//                Intent intent = new Intent(mContext, LocationDescriptionActivity.class);
+//                intent.putExtra("location", locations.get(position));
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onItemLongClick(Card card, int position) {
+//                Log.d("LONG_CLICK", card.getTag().toString());
+//            }
+//        });
+//
+//        mMaterialListView.getAdapter().addAll(cards);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -134,10 +124,11 @@ public class LocationListActivity extends AppCompatActivity {
 
             case R.id.menu_sort_by_name:
                 fillCards(this.mLocationRepository.getAll(SortingCriteria.NAME, mContext));
+                Log.d("context", "Context: " + mContext);
                 return true;
 
             case R.id.menu_sort_by_time:
-                fillCards(this.mLocationRepository.getAll(SortingCriteria.DISTANCE_FROM_CURRENT_LOCATION, mContext));
+                fillCards(this.mLocationRepository.getAll(SortingCriteria.TIME, mContext));
 
             default:
                 return super.onOptionsItemSelected(item);

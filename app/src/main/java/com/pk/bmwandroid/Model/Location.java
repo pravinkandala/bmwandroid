@@ -5,11 +5,6 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-/**
- * Created by Pravin on 10/24/16.
- * Project: bmwandroid
- */
-
 public class Location implements Serializable {
     private String id;
     private String name;
