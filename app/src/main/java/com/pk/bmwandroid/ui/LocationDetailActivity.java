@@ -3,6 +3,7 @@ package com.pk.bmwandroid.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -15,12 +16,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.pk.bmwandroid.R;
 import com.pk.bmwandroid.model.Location;
 
-import org.joda.time.DateTime;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.pk.bmwandroid.util.DateUtil.getDuration;
+import static com.pk.bmwandroid.util.DateUtil.toDateTime;
 
 public class LocationDetailActivity extends AppCompatActivity {
 
@@ -52,14 +52,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         String arrival_time = location.getArrivalTime();
 
         //find diff of duration from now
-        DateTime arrival_time_in_string = new DateTime(arrival_time);
-        String time = getDuration(arrival_time_in_string);
-
-        mNameTV.setText("Name: "+name);
-        mArrivalTimeTV.setText("Arrival Time: "+time);
-        mLatitudeTV.setText("Lat:"+latitude);
-        mLongitudeTV.setText("Lng:"+longitude);
-        mAddressTV.setText("Address: "+address);
+        String time = getDuration(toDateTime(arrival_time));
 
 
         try{
@@ -84,6 +77,21 @@ public class LocationDetailActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        name = "<b>Name: </b> " + name;
+        mNameTV.setText(Html.fromHtml(name));
+
+        time = "<b>Arrival Time: </b>" + time;
+        mArrivalTimeTV.setText(Html.fromHtml(time));
+
+        latitude = "<b>Lat: </b>" + latitude;
+        mLatitudeTV.setText(Html.fromHtml(latitude));
+
+        longitude = "<b>Lng: </b>" + longitude;
+        mLongitudeTV.setText(Html.fromHtml(longitude));
+
+        address = "<b>Address: </b>" + "<i>" + address + "</i>";
+        mAddressTV.setText(Html.fromHtml(address));
 
     }
 

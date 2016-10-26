@@ -6,18 +6,17 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.pk.bmwandroid.ui.adapter.LocationAdapter;
 import com.pk.bmwandroid.R;
 import com.pk.bmwandroid.data.repository.LocationRepository;
 import com.pk.bmwandroid.model.Location;
 import com.pk.bmwandroid.model.factory.LocationComparatorFactory.SortingCriteria;
 import com.pk.bmwandroid.network.LocalSearchManager;
 import com.pk.bmwandroid.network.ServerCallback;
+import com.pk.bmwandroid.ui.adapter.LocationAdapter;
 
 import java.util.List;
 
@@ -54,14 +53,13 @@ public class LocationListActivity extends AppCompatActivity {
         this.mLocationRepository = new LocationRepository();
         this.mSortingCriteria = SortingCriteria.NAME;
 
-        mSwipeRefreshLayout.setRefreshing(true);
+
         // Get Initial Data - on Notified - fillCards
         initList();
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(true);
                 initList();
             }
         });
@@ -70,6 +68,7 @@ public class LocationListActivity extends AppCompatActivity {
     }
 
     public void initList() {
+        mSwipeRefreshLayout.setRefreshing(true);
         LocalSearchManager.getLocalSearchResults(mContext, getString(R.string.json_url), new ServerCallback() {
             @Override
             public void onSuccess(final List<Location> locations) {
@@ -101,7 +100,7 @@ public class LocationListActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                Log.d("menu", "refresh");
+                initList();
                 return true;
 
             case R.id.menu_sort_by_name:
