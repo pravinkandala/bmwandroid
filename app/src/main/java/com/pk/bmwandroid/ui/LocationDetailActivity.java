@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 import static com.pk.bmwandroid.util.DateUtil.getDuration;
 
-public class LocationDescriptionActivity extends AppCompatActivity {
+public class LocationDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.name) TextView mNameTV;
     @BindView(R.id.address) TextView mAddressTV;

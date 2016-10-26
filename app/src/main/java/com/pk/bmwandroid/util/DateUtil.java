@@ -23,9 +23,9 @@ public class DateUtil {
         }
     }
 
-    public static String getDurationinJoda(DateTime end) {
+    public static Seconds getDurationInJoda(DateTime end) {
         DateTime start = DateTime.now(DateTimeZone.UTC);
-        String time = Seconds.secondsBetween(start,end).toString();
+        Seconds time = Seconds.secondsBetween(start,end);
         return time;
     }
 

@@ -44,7 +44,7 @@ public class LocalSearchManager {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("", "Error: " + error.getMessage());
+                VolleyLog.d("Volley", "Error: " + error.getMessage());
                 Toast.makeText(context,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
                 // hide the progress dialog

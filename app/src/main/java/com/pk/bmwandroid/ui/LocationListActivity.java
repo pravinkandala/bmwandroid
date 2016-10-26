@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.pk.bmwandroid.LocationAdapter;
+import com.pk.bmwandroid.ui.adapter.LocationAdapter;
 import com.pk.bmwandroid.R;
 import com.pk.bmwandroid.data.repository.LocationRepository;
 import com.pk.bmwandroid.model.Location;
@@ -54,7 +54,7 @@ public class LocationListActivity extends AppCompatActivity {
         this.mLocationRepository = new LocationRepository();
         this.mSortingCriteria = SortingCriteria.NAME;
 
-
+        mSwipeRefreshLayout.setRefreshing(true);
         // Get Initial Data - on Notified - fillCards
         initList();
 
@@ -80,30 +80,12 @@ public class LocationListActivity extends AppCompatActivity {
     }
 
     public void fillCards(final List<Location> locations) {
-//        List<Card> cards = new ArrayList<>();
 
         mAdapter = new LocationAdapter(this, locations);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-//        mMaterialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(Card card, int position) {
-//                Log.d("cards","button clicked: "+ count);
-//                Intent intent = new Intent(mContext, LocationDescriptionActivity.class);
-//                intent.putExtra("location", locations.get(position));
-//                startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onItemLongClick(Card card, int position) {
-//                Log.d("LONG_CLICK", card.getTag().toString());
-//            }
-//        });
-//
-//        mMaterialListView.getAdapter().addAll(cards);
+        //stop refresh progress
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -124,7 +106,6 @@ public class LocationListActivity extends AppCompatActivity {
 
             case R.id.menu_sort_by_name:
                 fillCards(this.mLocationRepository.getAll(SortingCriteria.NAME, mContext));
-                Log.d("context", "Context: " + mContext);
                 return true;
 
             case R.id.menu_sort_by_time:

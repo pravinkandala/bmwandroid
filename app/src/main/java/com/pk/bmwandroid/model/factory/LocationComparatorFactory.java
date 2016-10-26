@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.pk.bmwandroid.model.Location;
 
+import org.joda.time.Seconds;
+
 import java.util.Comparator;
 
-import static com.pk.bmwandroid.util.DateUtil.getDurationinJoda;
+import static com.pk.bmwandroid.util.DateUtil.getDurationInJoda;
 import static com.pk.bmwandroid.util.DateUtil.toDateTime;
 
 public class LocationComparatorFactory {
@@ -26,9 +28,9 @@ public class LocationComparatorFactory {
                     @Override
                     public int compare(Location l1, Location l2) {
 
-                        String time1 = getDurationinJoda(toDateTime(l1.getArrivalTime()));
+                        Seconds time1 = getDurationInJoda(toDateTime(l1.getArrivalTime()));
 
-                        String time2 = getDurationinJoda(toDateTime(l2.getArrivalTime()));
+                        Seconds time2 = getDurationInJoda(toDateTime(l2.getArrivalTime()));
 
                         return time1.compareTo(time2);
 

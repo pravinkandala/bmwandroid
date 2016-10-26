@@ -1,23 +1,18 @@
-package com.pk.bmwandroid;
+package com.pk.bmwandroid.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pk.bmwandroid.R;
 import com.pk.bmwandroid.model.Location;
-import com.pk.bmwandroid.ui.LocationDescriptionActivity;
+import com.pk.bmwandroid.ui.LocationDetailActivity;
 
 import java.util.List;
-
-/**
- * Created by Pravin on 10/26/16.
- * Project: bmwandroid
- */
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
@@ -61,8 +56,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         TextView addressTV = holder.mAddressTV;
         addressTV.setText(location.getAddress());
 
-
-
     }
 
     @Override
@@ -84,6 +77,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             mLocations = locations;
             mNameTV = (TextView) view.findViewById(R.id.title_name);
             mAddressTV = (TextView) view.findViewById(R.id.subtitle_address);
+
             view.setOnClickListener(this);
         }
 
@@ -92,8 +86,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
 
-                Log.d("card","clicked pos:"+position);
-                Intent intent = new Intent(mContext, LocationDescriptionActivity.class);
+                //Intent to LocationDetailActivity along with list of location's position selected
+                Intent intent = new Intent(mContext, LocationDetailActivity.class);
                 intent.putExtra("location", mLocations.get(position));
                 mContext.startActivity(intent);
             }
