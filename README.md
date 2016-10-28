@@ -1,6 +1,6 @@
 # BMW_Android
 
-###Test Requirements
+###Coding Challenge:
 
 You will build an Android app that displays information about different locations.
 This app will fetch the information for the locations from the following URL: [link](http://localsearch.azurewebsites.net/api/Locations "Google's Homepage")
