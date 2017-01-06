@@ -1,4 +1,4 @@
-# BMW_Android
+# Sample_Android
 
 ###Coding Challenge:
 
@@ -36,7 +36,7 @@ Works on Android Sdk Version - 15 to 24
 
 
 ## Screen Shots
-<img src="https://raw.github.com/pravinkandala/bmwandroid/master/Screens/Screen1.jpg" width="180" /> <img src="https://raw.github.com/pravinkandala/bmwandroid/master/Screens/Screen2.jpg" width="180" /> <img src="https://raw.github.com/pravinkandala/bmwandroid/master/Screens/Screen3.jpg" height="180" />
+<img src="https://raw.github.com/pravinkandala/sampleandroid/master/Screens/Screen1.jpg" width="180" /> <img src="https://raw.github.com/pravinkandala/sampleandroid/master/Screens/Screen2.jpg" width="180" /> <img src="https://raw.github.com/pravinkandala/sampleandroid/master/Screens/Screen3.jpg" height="180" />
 
 
 
